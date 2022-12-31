@@ -2,6 +2,7 @@ import { Action, Dispatch } from '@reduxjs/toolkit';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import { fetchEndAction, fetchStartAction } from '../slices/fetchStateSlice';
+import { resetSelectVideoAction, setSelectVideoAction } from '../slices/userSlice';
 import { addVideoAction, deleteVideoAction, setVideosAction, updateVideoAction } from '../slices/videosSlice';
 import { RootState } from '../store';
 import { PostVideo } from '../types/video';
@@ -12,6 +13,7 @@ const cookies = new Cookies();
 export const asyncGetVideos = () => {
   return async (dispatch: Dispatch<Action>, getState: () => RootState) => {
     dispatch(fetchStartAction('プロフィール取得中'));
+    console.log(videosURL);
     await axios
       .get(videosURL, {
         headers: {
@@ -65,6 +67,7 @@ export const asyncDeleteVideo = (id: number) => {
       })
       .then((res) => {
         dispatch(deleteVideoAction(id));
+        dispatch(resetSelectVideoAction());
       })
       .catch((e) => {
         console.log(e);
@@ -88,6 +91,7 @@ export const asyncLikeVideo = (id: number) => {
       })
       .then((res) => {
         dispatch(updateVideoAction(res.data));
+        dispatch(setSelectVideoAction(res.data));
       })
       .catch((e) => {
         console.log(e);
@@ -112,6 +116,7 @@ export const asyncDisLikeVideo = (id: number) => {
       })
       .then((res) => {
         dispatch(updateVideoAction(res.data));
+        dispatch(setSelectVideoAction(res.data));
       })
       .catch((e) => {
         console.log(e);

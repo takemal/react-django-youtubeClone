@@ -22,15 +22,6 @@ code {
   cursor: pointer;
 }
 
-.photo {
-  background-color: transparent;
-  color: gray;
-  margin-right: 10px;
-  font-size: 25px;
-  border: none;
-  outline: none;
-  cursor: pointer;
-}
 .btn-modal {
   background-color: transparent;
   color: gray;

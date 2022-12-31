@@ -32,6 +32,7 @@ export const asyncSignUp = (email: string, password: string) => {
 export const asyncSignIn = (email: string, password: string) => {
   return async (dispatch: Dispatch<Action>) => {
     dispatch(fetchStartAction('ログイン中'));
+    console.log(authURL);
     await axios
       .post(
         authURL,

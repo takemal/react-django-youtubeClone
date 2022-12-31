@@ -29,11 +29,14 @@ export const userSlice = createSlice({
     setSelectVideoAction: (state, action) => {
       state.selectVideo = action.payload;
     },
+    resetSelectVideoAction: (state) => {
+      state.selectVideo = initialUserState.selectVideo;
+    },
   },
 });
 
 export const userReducer = userSlice.reducer;
-export const { signInAction, signOutAction, setSelectVideoAction } = userSlice.actions;
+export const { signInAction, signOutAction, setSelectVideoAction, resetSelectVideoAction } = userSlice.actions;
 
 // state情報をそのままとる
 export const selectUser = (state: RootState) => state.user;

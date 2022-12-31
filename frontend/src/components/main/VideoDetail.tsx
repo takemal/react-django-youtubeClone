@@ -9,8 +9,9 @@ import { selectUser } from '../../slices/userSlice';
 import { Fab, Grid, IconButton, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { AppDispatch } from '../../store';
-import { asyncCreateVideo, asyncDisLikeVideo, asyncLikeVideo } from '../../lib/video';
+import { asyncCreateVideo, asyncDeleteVideo, asyncDisLikeVideo, asyncLikeVideo } from '../../lib/video';
 import { ConstructionOutlined } from '@mui/icons-material';
+import { positions } from '@mui/system';
 
 export const VideoDetail = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -25,12 +26,11 @@ export const VideoDetail = () => {
       </div>
     );
 
-  console.log(selectVideo.id);
   return (
     <>
-      <div className="wrapper">
+      <div className="relative pt-[56.25%]">
         <ReactPlayer
-          className="absolute t-0 w-full h-full"
+          className="absolute top-0 w-full h-full"
           url={selectVideo.video} //動画URL
           // ref={player}
           width="100%"
@@ -56,7 +56,12 @@ export const VideoDetail = () => {
         </Grid>
 
         <Grid item xs={1}>
-          <IconButton sx={{ paddingTop: 3 }} onClick={() => dispatch(asyncDisLikeVideo(selectVideo.id!))}>
+          <IconButton
+            sx={{ paddingTop: 3, backgroundColor: 'transparent' }}
+            onClick={() => {
+              dispatch(asyncLikeVideo(selectVideo.id!));
+            }}
+          >
             <AiFillLike />
             <Typography>{selectVideo.like}</Typography>
           </IconButton>
@@ -72,7 +77,7 @@ export const VideoDetail = () => {
         sx={{ paddingTop: 2 }}
         color="primary"
         aria-label="delete"
-        onClick={() => dispatch(asyncDisLikeVideo(selectVideo.id!))}
+        onClick={() => dispatch(asyncDeleteVideo(selectVideo.id!))}
       >
         <DeleteIcon />
       </Fab>

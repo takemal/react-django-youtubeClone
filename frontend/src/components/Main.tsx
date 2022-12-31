@@ -16,12 +16,13 @@ import { asyncCreateVideo, asyncGetVideos } from '../lib/video';
 import { styled } from '@mui/system';
 import Cookies from 'universal-cookie';
 import { selectVideos } from '../slices/videosSlice';
+import { OnChange } from '../types/events';
+import { PhotoCamera } from '@mui/icons-material';
 
 const IconButton1 = styled(IconButton)(({ theme }) => ({
   color: 'gray',
   marginRight: '25px',
-  fontSize: 50,
-  backgroundColor: 'transparent',
+  fontSize: 25,
 }));
 
 const style = {
@@ -66,6 +67,16 @@ export const Main = () => {
     setTitle(event.target.value)
   }, [setTitle])
 
+  //prettier-ignore
+  const onUploadVideo = useCallback((event: React.ChangeEvent<HTMLInputElement>)=>{
+  setVideo(event.target.files![0])
+  }, [setVideo])
+
+  //prettier-ignore
+  const onUploadImage = useCallback((event: React.ChangeEvent<HTMLInputElement>)=>{
+    setImg(event.target.files![0])
+  }, [setImg])
+
   return (
     <div>
       <Grid container sx={{ textAlign: 'center' }}>
@@ -97,18 +108,22 @@ export const Main = () => {
           <br />
           <br />
           <Container sx={{ textAlign: 'center' }}>
-            <IconButton1 aria-label="upload video">
-              <input hidden id="videoInput" type="file" onChange={(e) => setVideo(e.target.files![0])} />
-              <FaVideo className="photo" />
-            </IconButton1>
-            <IconButton1 color="primary" aria-label="upload image">
-              <input hidden id="imageInput" type="file" onChange={(e) => setImg(e.target.files![0])} />
-              <BsImages className="photo" />
-            </IconButton1>
-            <IconButton1 disabled={!title || !video || !img} onClick={() => newVideo()}>
+            <IconButton sx={{ color: 'gray', marginRight: '25px' }} disableRipple component="label">
+              <input hidden accept="video/*" type="file" onChange={onUploadVideo} />
+              <FaVideo />
+            </IconButton>
+            <IconButton sx={{ color: 'gray', marginRight: '25px' }} disableRipple component="label">
+              <input hidden accept="image/*" type="file" onChange={onUploadImage} />
+              <BsImages />
+            </IconButton>
+            <IconButton
+              sx={{ color: 'gray', marginRight: '25px' }}
+              disabled={!title || !video || !img}
+              onClick={() => newVideo()}
+            >
               <RiUploadCloud2Line />
-            </IconButton1>
-            <IconButton1 disabled={!title || !video || !img} onClick={() => setOpen(false)}>
+            </IconButton>
+            <IconButton1 onClick={() => setOpen(false)}>
               <IoMdClose />
             </IconButton1>
           </Container>
